@@ -1,16 +1,26 @@
-package com.kimyuriy.surfandroid
+package com.kimyuriy.surfandroid.windows
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
+import com.kimyuriy.surfandroid.R
 import com.kimyuriy.surfandroid.enums.OpenType
+import com.kimyuriy.surfandroid.utils.SPValues
 
 class AddFirstCocktail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_first_cocktail)
+
+        val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
+        val savedCocktails = prefs.getString(SPValues.savedCocktailsKey, null)
+        if (savedCocktails != null) {
+            startActivity(Intent(this@AddFirstCocktail, SavedCocktails::class.java))
+            finish()
+        }
 
         /**
          * Нажатие кнопки "+" для добавления первого коктейля
@@ -20,6 +30,7 @@ class AddFirstCocktail : AppCompatActivity() {
                 putExtra("OpenType", OpenType.CREATE.name)
             }
             startActivity(intent)
+            finish()
         }
     }
 

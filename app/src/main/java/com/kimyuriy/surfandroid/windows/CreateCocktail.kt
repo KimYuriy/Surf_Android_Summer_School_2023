@@ -1,6 +1,7 @@
-package com.kimyuriy.surfandroid
+package com.kimyuriy.surfandroid.windows
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kimyuriy.surfandroid.R
 import com.kimyuriy.surfandroid.adapters.IngredientsRecAdapter
 import com.kimyuriy.surfandroid.enums.OpenType
 import com.kimyuriy.surfandroid.utils.SPValues
@@ -66,8 +68,8 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
             val desc = descriptionET.text.toString().ifEmpty { "" }
             val cocktailJSON = JSONObject().apply {
                 put("name", name)
-                put("desc", desc)
-                put("ingredients", ingredients)
+                put("description", desc)
+                put("ingredients", ingredients.joinToString(","))
                 put("recipe", recipe)
             }
             val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
@@ -94,8 +96,7 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
          * Нажатие кнопки возврата назад
          */
         findViewById<Button>(R.id.CC_Cancel_B).setOnClickListener {
-            super.onBackPressed()
-            finish()
+            openNecessaryWindow()
         }
 
         /**
@@ -124,11 +125,22 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
 
     @Override
     override fun onBackPressed() {
-        super.onBackPressed()
+        openNecessaryWindow()
     }
 
     override fun onIngredientDelete(ingredient: String) {
         ingredients.remove(ingredient)
         recAdapter.notifyDataSetChanged()
+    }
+
+    private fun openNecessaryWindow() {
+        val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
+        val intent = if (prefs.getString(SPValues.savedCocktailsKey, null) != null)
+            Intent(this@CreateCocktail, SavedCocktails::class.java)
+        else {
+            Intent(this@CreateCocktail, AddFirstCocktail::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 }
