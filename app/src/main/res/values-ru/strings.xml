@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мои коктейли</string>
+    <string name="my_cocktails_text">Мои коктейли</string>
+    <string name="add_your_first_cocktail_here_text">Добавьте ваш первый коктейль</string>
+    <string name="cocktail_name_text">Название коктейля</string>
+    <string name="cocktail_description_text">Описание коктейля</string>
+    <string name="cocktail_recipe_text">Рецепт коктейля</string>
+    <string name="save_text">Сохранить</string>
+    <string name="cancel_text">Отменить</string>
+    <string name="attention_text">Внимание!</string>
+    <string name="do_you_really_wanna_exit_app_text">Вы действительно хотите закрыть приложение?</string>
+    <string name="yes_text">Да</string>
+    <string name="no_text">Нет</string>
+    <string name="add_ingredient_text">Добавить ингредиент</string>
+    <string name="enter_one_ingredient_text">Введите ингредиент</string>
+    <string name="add_text">Добавить</string>
+</resources>

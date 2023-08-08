@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateCocktail">
+
+    <ImageView
+        android:id="@+id/CC_Cocktail_IV"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/img_default"
+        app:layout_constraintBottom_toTopOf="@id/CC_CocktailName_ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/CC_CocktailName_ET"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:hint="@string/cocktail_name_text"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@id/CC_Description_TV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_Cocktail_IV" />
+
+    <EditText
+        android:id="@+id/CC_Description_TV"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/cocktail_description_text"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:maxLines="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_CocktailName_ET"
+        app:layout_constraintBottom_toTopOf="@id/CC_AddIngredient_B" />
+
+    <Button
+        android:id="@+id/CC_AddIngredient_B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/add_ingredient_text"
+        app:layout_constraintBottom_toTopOf="@id/CC_Ingredients_RV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_Description_TV" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CC_Ingredients_RV"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        tools:listitem="@layout/ingredient_item"
+        app:layout_constraintBottom_toTopOf="@id/CC_CocktailRecipe_ET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_AddIngredient_B" />
+
+    <EditText
+        android:id="@+id/CC_CocktailRecipe_ET"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:enabled="false"
+        android:hint="@string/cocktail_recipe_text"
+        app:layout_constraintBottom_toTopOf="@id/CC_Save_B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_Ingredients_RV" />
+
+    <Button
+        android:id="@+id/CC_Save_B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_background"
+        android:enabled="false"
+        android:text="@string/save_text"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@id/CC_Cancel_B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_CocktailRecipe_ET" />
+
+    <Button
+        android:id="@+id/CC_Cancel_B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:text="@string/cancel_text"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/CC_Save_B" />
+</androidx.constraintlayout.widget.ConstraintLayout>

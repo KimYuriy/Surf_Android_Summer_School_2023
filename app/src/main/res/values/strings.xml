@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">SurfAndroidSummerSchool2023</string>
+    <string name="app_name">My cocktails</string>
+    <string name="my_cocktails_text">My cocktails</string>
+    <string name="add_your_first_cocktail_here_text">Add your first cocktail here</string>
+    <string name="cocktail_name_text">Cocktail name</string>
+    <string name="cocktail_description_text">Cocktail Description</string>
+    <string name="cocktail_recipe_text">Cocktail Recipe</string>
+    <string name="save_text">Save</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="attention_text">Attention!</string>
+    <string name="do_you_really_wanna_exit_app_text">Do you really want to exit app?</string>
+    <string name="yes_text">Yes</string>
+    <string name="no_text">No</string>
+    <string name="add_ingredient_text">Add ingredient</string>
+    <string name="enter_one_ingredient_text">Enter ingredient</string>
+    <string name="add_text">Add</string>
 </resources>

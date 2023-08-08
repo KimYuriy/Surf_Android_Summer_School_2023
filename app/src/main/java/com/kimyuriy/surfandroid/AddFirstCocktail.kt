@@ -1,0 +1,39 @@
+package com.kimyuriy.surfandroid
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
+import com.kimyuriy.surfandroid.enums.OpenType
+
+class AddFirstCocktail : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.add_first_cocktail)
+
+        /**
+         * Нажатие кнопки "+" для добавления первого коктейля
+         */
+        findViewById<ImageButton>(R.id.AFC_AddFirstCocktail_IB).setOnClickListener {
+            val intent = Intent(this@AddFirstCocktail, CreateCocktail::class.java).apply {
+                putExtra("OpenType", OpenType.CREATE.name)
+            }
+            startActivity(intent)
+        }
+    }
+
+    /**
+     * Показ диалогового окна для подтверждения выхода из приложения
+     */
+    @Override
+    override fun onBackPressed() {
+        AlertDialog.Builder(this@AddFirstCocktail).apply {
+            setTitle(getString(R.string.attention_text))
+            setMessage(getString(R.string.do_you_really_wanna_exit_app_text))
+            setPositiveButton(getString(R.string.yes_text)) { _, _ -> finish() }
+            setNegativeButton(getString(R.string.no_text), null)
+            setCancelable(true)
+        }.create().show()
+    }
+}
