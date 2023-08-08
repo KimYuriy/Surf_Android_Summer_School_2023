@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".windows.CurrentCocktailInfo">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:background="@android:color/transparent">
+        <ImageView
+            android:id="@+id/CCI_CocktailImage_IV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/img_default"/>
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:background="@drawable/roundborder_background">
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/CCI_Name_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/CCI_Description_TV"
+            android:text="Cocktail name"
+            android:layout_marginBottom="5dp"
+            android:textSize="40sp" />
+
+        <TextView
+            android:padding="5dp"
+            android:background="@drawable/roundborder_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/CCI_Description_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/CCI_Ingredients_RV"
+            app:layout_constraintTop_toBottomOf="@id/CCI_Name_TV"
+            android:text="Cocktail description that wiill be replaced by real text"
+            android:textSize="20sp"
+            android:textAlignment="center" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/CCI_Ingredients_RV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/CCI_Description_TV"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintBottom_toTopOf="@id/CCI_CocktailRecipe_TV"
+            tools:listitem="@layout/non_editable_ingredient_item"/>
+
+        <TextView
+            android:padding="5dp"
+            android:background="@drawable/roundborder_background"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/CCI_CocktailRecipe_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/CCI_Ingredients_RV"
+            app:layout_constraintBottom_toTopOf="@id/CCI_EditInfo_B"
+            android:text="Recipe for cocktail"
+            android:textSize="20sp"/>
+
+        <Button
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/CCI_EditInfo_B"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/button_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/CCI_CocktailRecipe_TV"
+            app:layout_constraintBottom_toTopOf="@id/CCI_DeleteCocktail_B"
+            android:text="@string/edit_text"
+            android:textSize="25sp" />
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:id="@+id/CCI_DeleteCocktail_B"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/CCI_EditInfo_B"
+            android:text="@string/delete_text"
+            android:textSize="25sp"
+            android:backgroundTint="#FF0000"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -30,7 +30,6 @@ class AddFirstCocktail : AppCompatActivity() {
                 putExtra("OpenType", OpenType.CREATE.name)
             }
             startActivity(intent)
-            finish()
         }
     }
 

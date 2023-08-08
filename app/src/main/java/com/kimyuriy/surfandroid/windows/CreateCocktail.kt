@@ -140,6 +140,7 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
         else {
             Intent(this@CreateCocktail, AddFirstCocktail::class.java)
         }
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()
     }

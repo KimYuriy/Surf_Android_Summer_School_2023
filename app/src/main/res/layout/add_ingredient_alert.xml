@@ -13,8 +13,10 @@
         android:text="@string/add_ingredient_text" />
 
     <EditText
+        android:background="@drawable/roundborder_background"
         android:id="@+id/ADA_Ingredient_ET"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:padding="5dp"
         android:hint="@string/enter_one_ingredient_text"/>
 </LinearLayout>

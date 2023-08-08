@@ -24,6 +24,16 @@ class SavedCocktails : AppCompatActivity() {
 
         savedCocktailsRV = findViewById(R.id.SC_SavedCocktails_RV)
 
+        findViewById<ImageButton>(R.id.SC_AddNewCocktail_IB).setOnClickListener {
+            val intent = Intent(this@SavedCocktails, CreateCocktail::class.java).apply {
+                putExtra("OpenType", OpenType.CREATE.name)
+            }
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
         val savedCocktails = prefs.getString(SPValues.savedCocktailsKey, null)
         if (savedCocktails != null) {
@@ -33,7 +43,7 @@ class SavedCocktails : AppCompatActivity() {
                 val jsonObject = jsonArray.getJSONObject(i)
                 val name = jsonObject.getString("name")
                 val desc = jsonObject.getString("description")
-                val ingredients = ArrayList(jsonObject.getString("ingredients").split(","))
+                val ingredients = jsonObject.getString("ingredients")
                 val recipe = jsonObject.getString("recipe")
                 cocktails.add(CocktailInfo(name, desc, ingredients, recipe))
             }
@@ -42,14 +52,6 @@ class SavedCocktails : AppCompatActivity() {
                 layoutManager = GridLayoutManager(this@SavedCocktails, 2)
                 adapter = customAdapter
             }
-        }
-
-        findViewById<ImageButton>(R.id.SC_AddNewCocktail_IB).setOnClickListener {
-            val intent = Intent(this@SavedCocktails, CreateCocktail::class.java).apply {
-                putExtra("OpenType", OpenType.CREATE.name)
-            }
-            startActivity(intent)
-            finish()
         }
     }
 }

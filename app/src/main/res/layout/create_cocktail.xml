@@ -18,6 +18,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:background="@drawable/roundborder_background"
+        android:padding="5dp"
         android:id="@+id/CC_CocktailName_ET"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -33,6 +35,8 @@
         app:layout_constraintTop_toBottomOf="@id/CC_Cocktail_IV" />
 
     <EditText
+        android:background="@drawable/roundborder_background"
+        android:padding="5dp"
         android:id="@+id/CC_Description_TV"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -77,6 +81,8 @@
         app:layout_constraintTop_toBottomOf="@id/CC_AddIngredient_B" />
 
     <EditText
+        android:background="@drawable/roundborder_background"
+        android:padding="5dp"
         android:id="@+id/CC_CocktailRecipe_ET"
         android:layout_width="match_parent"
         android:layout_height="0dp"
