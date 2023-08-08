@@ -43,3 +43,4 @@
 + ![](shots/editing_info.jpg)
 + Сохраненная отредактированная информация
 + ![](shots/saved_cocktails_edited.jpg)
++ Видеодемонстрация работы приложения
