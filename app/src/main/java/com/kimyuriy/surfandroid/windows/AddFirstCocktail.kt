@@ -17,7 +17,7 @@ class AddFirstCocktail : AppCompatActivity() {
 
         val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
         val savedCocktails = prefs.getString(SPValues.savedCocktailsKey, null)
-        if (savedCocktails != null) {
+        if (!savedCocktails.isNullOrEmpty()) {
             startActivity(Intent(this@AddFirstCocktail, SavedCocktails::class.java))
             finish()
         }

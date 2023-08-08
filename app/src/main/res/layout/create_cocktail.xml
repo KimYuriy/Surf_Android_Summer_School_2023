@@ -18,8 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:background="@drawable/roundborder_background"
-        android:padding="5dp"
         android:id="@+id/CC_CocktailName_ET"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -27,29 +25,31 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/roundborder_background"
         android:hint="@string/cocktail_name_text"
         android:maxLines="1"
+        android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@id/CC_Description_TV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/CC_Cocktail_IV" />
 
     <EditText
-        android:background="@drawable/roundborder_background"
-        android:padding="5dp"
         android:id="@+id/CC_Description_TV"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:hint="@string/cocktail_description_text"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/roundborder_background"
+        android:hint="@string/cocktail_description_text"
         android:maxLines="5"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@id/CC_AddIngredient_B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/CC_CocktailName_ET"
-        app:layout_constraintBottom_toTopOf="@id/CC_AddIngredient_B" />
+        app:layout_constraintTop_toBottomOf="@id/CC_CocktailName_ET" />
 
     <Button
         android:id="@+id/CC_AddIngredient_B"
@@ -74,15 +74,13 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="5dp"
         android:visibility="gone"
-        tools:listitem="@layout/ingredient_item"
         app:layout_constraintBottom_toTopOf="@id/CC_CocktailRecipe_ET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/CC_AddIngredient_B" />
+        app:layout_constraintTop_toBottomOf="@id/CC_AddIngredient_B"
+        tools:listitem="@layout/ingredient_item" />
 
     <EditText
-        android:background="@drawable/roundborder_background"
-        android:padding="5dp"
         android:id="@+id/CC_CocktailRecipe_ET"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -90,8 +88,10 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="5dp"
+        android:background="@drawable/roundborder_background"
         android:enabled="false"
         android:hint="@string/cocktail_recipe_text"
+        android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@id/CC_Save_B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

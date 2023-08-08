@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDeleteListener {
-    private val ingredients = ArrayList<String>()
+    private var ingredients = ArrayList<String>()
     private lateinit var recAdapter: IngredientsRecAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,17 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
         val ingredientsRV: RecyclerView = findViewById(R.id.CC_Ingredients_RV)
 
         val openType = OpenType.valueOf(intent.getStringExtra("OpenType").toString())
-
+        if (openType == OpenType.EDIT) {
+            cocktailNameET.setText(intent.getStringExtra("name"))
+            descriptionET.setText(intent.getStringExtra("desc"))
+            cocktailRecipeET.setText(intent.getStringExtra("recipe"))
+            if (intent.getStringExtra("ingredients") != null) {
+                ingredients = ArrayList(intent.getStringExtra("ingredients").toString().split(","))
+                ingredientsRV.visibility = View.VISIBLE
+            }
+            cocktailRecipeET.isEnabled = true
+            saveB.isEnabled = true
+        }
         recAdapter = IngredientsRecAdapter(ingredients)
         recAdapter.setOnIngredientDeleteListener(this@CreateCocktail)
         ingredientsRV.apply{

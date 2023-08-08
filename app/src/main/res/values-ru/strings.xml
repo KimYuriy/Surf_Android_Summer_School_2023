@@ -17,4 +17,5 @@
     <string name="add_text">Добавить</string>
     <string name="edit_text">Редактировать</string>
     <string name="delete_text">Удалить</string>
+    <string name="do_you_really_want_to_delete_this_cocktail_text">Вы действительно хотите удалить этот коктейль?</string>
 </resources>
