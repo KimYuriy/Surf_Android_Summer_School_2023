@@ -18,6 +18,10 @@ class SavedCocktailsRecAdapter(private val array: ArrayList<CocktailInfo>): Recy
         var recipe = ""
 
         init {
+            /**
+             * Нажатие на элемент для открытия странички с подробным описанием коктейля.
+             * Передаются все необходимые данные в intent
+             */
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, CurrentCocktailInfo::class.java)
                 intent.apply {

@@ -17,4 +17,5 @@
     <string name="edit_text">Edit</string>
     <string name="delete_text">Delete</string>
     <string name="do_you_really_want_to_delete_this_cocktail_text">Do you really want to delete this cocktail?</string>
+    <string name="already_exist_text">Already exist</string>
 </resources>

@@ -22,7 +22,7 @@ import org.json.JSONArray
 
 class CurrentCocktailInfo : AppCompatActivity() {
 
-    lateinit var prefs: SharedPreferences
+    private lateinit var prefs: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.current_cocktail_info)
@@ -32,11 +32,17 @@ class CurrentCocktailInfo : AppCompatActivity() {
         val recipeTV: TextView = findViewById(R.id.CCI_CocktailRecipe_TV)
         val ingredientsRV: RecyclerView = findViewById(R.id.CCI_Ingredients_RV)
 
+        /**
+         * Получение всех необходимых значений из intent
+         */
         val name = intent.getStringExtra("name")
         val description = intent.getStringExtra("desc")
         val ingredients = ArrayList(intent.getStringExtra("ingredients")?.split(","))
         val recipe = intent.getStringExtra("recipe")
 
+        /**
+         * Установка всех значений в элементы разметки экрана
+         */
         nameTV.text = name
         if (description != "") descriptionTV.text = description else descriptionTV.visibility = View.GONE
         if (recipe != "") recipeTV.text = recipe else recipeTV.visibility = View.GONE
@@ -48,6 +54,10 @@ class CurrentCocktailInfo : AppCompatActivity() {
             adapter = NonEditableIngredientAdapter(ingredients)
         }
 
+        /**
+         * Нажатие кнопки редактирования информации - передача в intent всех данных о коктейле,
+         * также передача типа действия (редактирование)
+         */
         findViewById<Button>(R.id.CCI_EditInfo_B).setOnClickListener {
             val intent = Intent(this@CurrentCocktailInfo, CreateCocktail::class.java)
             intent.apply {
@@ -61,6 +71,9 @@ class CurrentCocktailInfo : AppCompatActivity() {
             finish()
         }
 
+        /**
+         * Нажатие кнопки удаления коктейля. Вызывает появление AlertDialog
+         */
         findViewById<Button>(R.id.CCI_DeleteCocktail_B).setOnClickListener {
             AlertDialog.Builder(this@CurrentCocktailInfo).apply {
                 setTitle(getString(R.string.attention_text))
@@ -79,6 +92,10 @@ class CurrentCocktailInfo : AppCompatActivity() {
         openNecessaryWindow()
     }
 
+    /**
+     * Функция открытия окна. Проверяет сохраненный массив - если он пустой, то открывается стартовое окно,
+     * а иначе окно с сохраненными коктейлями
+     */
     private fun openNecessaryWindow() {
         val intent = if (prefs.getString(SPValues.savedCocktailsKey, null).isNullOrEmpty()) {
             Intent(this@CurrentCocktailInfo, AddFirstCocktail::class.java)
@@ -91,6 +108,12 @@ class CurrentCocktailInfo : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * Метод удаления коктейля из списка сохраненных.
+     * Выполняется поиск по сохраненному массиву. Если находится - возвращается его индекс, иначе -1.
+     * Если индекс != -1, то элемент удаляется из массива и обновленный массив сохраняется в память,
+     * предварительно выполнив проверку, не пустой ли он. Если пустой, то сохраняется null, иначе сам массив
+     */
     private fun deleteCocktail(name: String) {
         val saved = prefs.getString(SPValues.savedCocktailsKey, null)
         if (saved != null) {

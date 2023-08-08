@@ -15,6 +15,10 @@ class AddFirstCocktail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_first_cocktail)
 
+        /**
+         * Проверка сохраненного массива на пустоту. Если массив не пуст (т.е. уже имеются сохраненные
+         * данные), то открывается окно сохраненных коктейлей
+         */
         val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
         val savedCocktails = prefs.getString(SPValues.savedCocktailsKey, null)
         if (!savedCocktails.isNullOrEmpty()) {
@@ -23,7 +27,8 @@ class AddFirstCocktail : AppCompatActivity() {
         }
 
         /**
-         * Нажатие кнопки "+" для добавления первого коктейля
+         * Нажатие кнопки "+" для добавления первого коктейля. В intent передается тип действия (создание
+         * нового коктейля)
          */
         findViewById<ImageButton>(R.id.AFC_AddFirstCocktail_IB).setOnClickListener {
             val intent = Intent(this@AddFirstCocktail, CreateCocktail::class.java).apply {

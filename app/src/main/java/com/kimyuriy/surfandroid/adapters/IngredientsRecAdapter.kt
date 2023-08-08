@@ -10,6 +10,9 @@ import com.kimyuriy.surfandroid.R
 
 class IngredientsRecAdapter(private val ingredients: List<String>): RecyclerView.Adapter<IngredientsRecAdapter.ViewHolder>() {
 
+    /**
+     * Интерфейс для удаления элемента из массива в окне создания нового коктейля
+     */
     interface OnIngredientDeleteListener {
         fun onIngredientDelete(ingredient: String)
     }
@@ -24,6 +27,9 @@ class IngredientsRecAdapter(private val ingredients: List<String>): RecyclerView
         val ingredientNameTV: TextView = itemView.findViewById(R.id.II_IngredientName_TV)
 
         init {
+            /**
+             * Нажатие кнопки удаления ингредиента. Сработает функция в окне создания нового коктейля
+             */
             deleteIngredientIB.setOnClickListener {
                 val pos = adapterPosition
                 if (pos != RecyclerView.NO_POSITION) {

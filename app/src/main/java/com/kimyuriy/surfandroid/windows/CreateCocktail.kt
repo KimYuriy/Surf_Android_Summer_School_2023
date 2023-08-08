@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kimyuriy.surfandroid.R
 import com.kimyuriy.surfandroid.adapters.IngredientsRecAdapter
 import com.kimyuriy.surfandroid.enums.OpenType
+import com.kimyuriy.surfandroid.utils.CustomFunctions
 import com.kimyuriy.surfandroid.utils.SPValues
 import org.json.JSONArray
 import org.json.JSONObject
@@ -24,6 +25,7 @@ import java.util.ArrayList
 class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDeleteListener {
     private var ingredients = ArrayList<String>()
     private lateinit var recAdapter: IngredientsRecAdapter
+    private lateinit var oldName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +37,29 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
         val saveB: Button = findViewById(R.id.CC_Save_B)
         val ingredientsRV: RecyclerView = findViewById(R.id.CC_Ingredients_RV)
 
+        /**
+         * Проверка на тип действия - если редактирование существующих данных, то подгружаются все
+         * необходимые данные из intent, устанавливаются в соответствующие поля и переменные,
+         * все необходимые элементы экрана становятся активными и видимыми. Также сохраняется
+         * предыдущее имя изменяемого элемента
+         */
         val openType = OpenType.valueOf(intent.getStringExtra("OpenType").toString())
         if (openType == OpenType.EDIT) {
             cocktailNameET.setText(intent.getStringExtra("name"))
+            oldName = intent.getStringExtra("name").toString()
             descriptionET.setText(intent.getStringExtra("desc"))
             cocktailRecipeET.setText(intent.getStringExtra("recipe"))
-            if (intent.getStringExtra("ingredients") != null) {
+            if (!intent.getStringExtra("ingredients").isNullOrEmpty()) {
                 ingredients = ArrayList(intent.getStringExtra("ingredients").toString().split(","))
                 ingredientsRV.visibility = View.VISIBLE
             }
             cocktailRecipeET.isEnabled = true
             saveB.isEnabled = true
         }
+
+        /**
+         * Установка адаптера для RecyclerView, также назначается слушатель для интерфейса
+         */
         recAdapter = IngredientsRecAdapter(ingredients)
         recAdapter.setOnIngredientDeleteListener(this@CreateCocktail)
         ingredientsRV.apply{
@@ -72,35 +85,59 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
 
         /**
          * Нажатие кнопки сохранения информации о коктейле
+         * Если происходит создание нового коктейля, то он просто сохраняется в JSON-объект и,
+         * если уже имеются сохраненные данные, то добавляется в конец, иначе создается новый массив
+         * и в него помещается объект. Если же происходит редактирование, то создается объект с
+         * новыми данными, удаляется старый и на его место вставляется новый. Весь список сохраняется
+         * в SharedPreferences
          */
         saveB.setOnClickListener {
+            val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
+            val savedCocktailsString = prefs.getString(SPValues.savedCocktailsKey, null)
+            var jsonString: String? = ""
+
             val name = cocktailNameET.text.toString()
             val recipe = cocktailRecipeET.text.toString().ifEmpty { "" }
             val desc = descriptionET.text.toString().ifEmpty { "" }
+
             val cocktailJSON = JSONObject().apply {
                 put("name", name)
                 put("description", desc)
                 put("ingredients", ingredients.joinToString(","))
                 put("recipe", recipe)
             }
-            val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
-            val savedCocktailsString = prefs.getString(SPValues.savedCocktailsKey, null)
-            val jsonString = if (savedCocktailsString.isNullOrEmpty()) {
-                val jsonArray = JSONArray().put(cocktailJSON)
-                jsonArray.toString()
-            } else {
-                val savedCocktails = JSONArray(savedCocktailsString)
-                savedCocktails.put(cocktailJSON)
-                savedCocktails.toString()
+
+            if (openType == OpenType.CREATE) {
+                jsonString = if (savedCocktailsString.isNullOrEmpty()) {
+                    val jsonArray = JSONArray()
+                    jsonArray.put(cocktailJSON)
+                    jsonArray.toString()
+                } else {
+                    val savedCocktails = JSONArray(savedCocktailsString)
+                    if (CustomFunctions.getItemIndex(name, savedCocktails, this@CreateCocktail) == -1) {
+                        savedCocktails.put(cocktailJSON)
+                    }
+                    else {
+                        Toast.makeText(this@CreateCocktail,
+                            getString(R.string.already_exist_text), Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    savedCocktails.toString()
+                }
+            }
+            else {
+                val json = JSONArray(savedCocktailsString)
+                val index = CustomFunctions.getItemIndex(oldName, json, this@CreateCocktail)
+                if (index != -1) {
+                    json.apply {
+                        remove(index)
+                        put(index, cocktailJSON)
+                    }
+                }
+                jsonString = if (json.length() <= 0) null else json.toString()
             }
             prefs.edit().putString(SPValues.savedCocktailsKey, jsonString).apply()
-            cocktailNameET.text = null
-            cocktailRecipeET.text = null
-            descriptionET.text = null
-            cocktailRecipeET.isEnabled = false
-            ingredients.clear()
-            recAdapter.notifyDataSetChanged()
-            ingredientsRV.visibility = View.GONE
+            openNecessaryWindow()
         }
 
         /**
@@ -111,7 +148,9 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
         }
 
         /**
-         * Нажатие кнопки добавления нового ингредиента
+         * Нажатие кнопки добавления нового ингредиента.
+         * Название ингредиента берется из EditText и добавляется в массив ингредиентов, RecyclerView,
+         * в котором отображаются ингредиенты, становится видимым
          */
         findViewById<Button>(R.id.CC_AddIngredient_B).setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.add_ingredient_alert, null)
@@ -139,11 +178,18 @@ class CreateCocktail : AppCompatActivity(), IngredientsRecAdapter.OnIngredientDe
         openNecessaryWindow()
     }
 
+    /**
+     * Переопределенный метод удаления ингредиента из массива ингредиентов
+     */
     override fun onIngredientDelete(ingredient: String) {
         ingredients.remove(ingredient)
         recAdapter.notifyDataSetChanged()
     }
 
+    /**
+     * Функция открытия окна. Проверяет сохраненный массив - если он пустой, то открывается стартовое окно,
+     * а иначе окно с сохраненными коктейлями
+     */
     private fun openNecessaryWindow() {
         val prefs = getSharedPreferences(SPValues.prefsName, Context.MODE_PRIVATE)
         val intent = if (prefs.getString(SPValues.savedCocktailsKey, null) != null)
